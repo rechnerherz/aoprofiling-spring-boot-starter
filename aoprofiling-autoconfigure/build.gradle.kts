@@ -13,7 +13,6 @@ dependencies {
 
     compileOnly("org.springframework.boot:spring-boot-starter:$springBootVersion")
     compileOnly("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
-    compileOnly("org.springframework.boot:spring-boot-starter-validation:$springBootVersion")
     compileOnly("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     annotationProcessor ("org.springframework.boot:spring-boot-autoconfigure-processor:$springBootVersion")
     annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")

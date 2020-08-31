@@ -2,12 +2,8 @@ package at.darioseidl.aoprofiling
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
-import org.springframework.validation.annotation.Validated
-import javax.validation.constraints.Pattern
-import javax.validation.constraints.Positive
 
 @Component
-@Validated
 @ConfigurationProperties(prefix = "aoprofiling")
 class ProfilingProperties {
 
@@ -22,11 +18,9 @@ class ProfilingProperties {
     var mode: Mode = Mode.TREE
 
     /** Strings will be truncated to at most this number of characters, unless mode is VERBOSE. */
-    @Positive
     var truncate: Int = 100
 
     /** A comma-separated list of target.method names to ignore. */
-    @Pattern(regexp = """|(\S+(,\S+)*)""")
     var ignore: String = ""
 
     /**

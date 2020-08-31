@@ -12,6 +12,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
-    implementation("org.springframework.boot:spring-boot-starter-validation:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
 }
