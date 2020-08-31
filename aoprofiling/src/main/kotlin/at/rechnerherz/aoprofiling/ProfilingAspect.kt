@@ -94,7 +94,7 @@ class ProfilingAspect(
     fun withinRepositoryEventHandler() {}
 
     @Pointcut(
-        "within(at.rechnerherz.aoprofiling.NoProfiling *)" +
+        "within(@at.rechnerherz.aoprofiling.NoProfiling *)" +
                 " || @annotation(at.rechnerherz.aoprofiling.NoProfiling)"
     )
     fun noProfiling() {}
