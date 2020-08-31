@@ -1,3 +1,3 @@
 # Register the auto-configuration class
 # https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-developing-auto-configuration
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=at.darioseidl.aoprofiling.autoconfigure.ProfilingAspectAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=at.rechnerherz.aoprofiling.autoconfigure.ProfilingAspectAutoConfiguration

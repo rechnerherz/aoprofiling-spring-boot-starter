@@ -1,4 +1,4 @@
-package at.darioseidl.aoprofiling
+package at.rechnerherz.aoprofiling
 
 /**
  * If a method is annotated with [ProfilingSummary] a profiling summary will be printed after its execution.

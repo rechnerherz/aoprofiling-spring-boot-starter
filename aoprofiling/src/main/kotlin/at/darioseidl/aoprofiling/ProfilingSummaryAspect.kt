@@ -1,4 +1,4 @@
-package at.darioseidl.aoprofiling
+package at.rechnerherz.aoprofiling
 
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around

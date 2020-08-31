@@ -1,4 +1,4 @@
-package at.darioseidl.aoprofiling
+package at.rechnerherz.aoprofiling
 
 data class ProfilingInfo(
     val callStack: List<String>,

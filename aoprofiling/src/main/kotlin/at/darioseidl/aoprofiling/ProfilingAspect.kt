@@ -1,4 +1,4 @@
-package at.darioseidl.aoprofiling
+package at.rechnerherz.aoprofiling
 
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
@@ -243,7 +243,7 @@ class ProfilingAspect(
         if (tree) ((if (size > 0) "├" + "─".repeat(size) else "└") + " ") else ""
 
     companion object {
-        const val GROUP = "at.darioseidl.aoprofiling"
+        const val GROUP = "at.rechnerherz.aoprofiling"
         const val HR = "────────────────────────────────────────────────────────────────────────────────\n"
     }
 

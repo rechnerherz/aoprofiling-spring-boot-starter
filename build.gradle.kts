@@ -20,19 +20,20 @@ plugins {
     // https://github.com/researchgate/gradle-release
     id("net.researchgate.release") version "2.8.1"
 
-    maven
+    // Maven Publish plugin
+    // https://docs.gradle.org/current/userguide/publishing_maven.html
     `maven-publish`
 }
 
-group = "at.darioseidl.aoprofiling"
+group = "at.rechnerherz.aoprofiling"
 
 fun Project.envConfig() = object : kotlin.properties.ReadOnlyProperty<Any?, String?> {
     override fun getValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>): String? =
-            if (extensions.extraProperties.has(property.name)) {
-                extensions.extraProperties[property.name] as? String
-            } else {
-                System.getenv(property.name)
-            }
+        if (extensions.extraProperties.has(property.name)) {
+            extensions.extraProperties[property.name] as? String
+        } else {
+            System.getenv(property.name)
+        }
 }
 
 release {
@@ -48,7 +49,7 @@ subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
 
-    group = "at.darioseidl.aoprofiling"
+    group = "at.rechnerherz.aoprofiling"
 
     repositories {
         jcenter()
@@ -107,9 +108,9 @@ subprojects {
                 artifact(tasks["javadocJar"])
 
                 pom {
-                    name.set("Sample Spring Boot Starter")
-                    description.set("A Spring Boot Starter example.")
-                    url.set("https://<Website or Repository URL>")
+                    name.set("AOProfiling Spring Boot Starter")
+                    description.set("Aspect-oriented profiling Spring Boot starter.")
+                    url.set("https://github.com/rechnerherz/aoprofiling")
 
                     licenses {
                         license {
@@ -119,15 +120,15 @@ subprojects {
                     }
                     developers {
                         developer {
-                            id.set("<Developer Id>")
-                            name.set("<Developer Name>")
-                            email.set("<Developer Email>")
+                            id.set("darioseidl")
+                            name.set("Dario Seidl")
+                            email.set("darioseidl@fastmail.fm")
                         }
                     }
                     scm {
-                        connection.set("https://<Repository URL>.git")
-                        developerConnection.set("https://<Repository URL>.git")
-                        url.set("https://<Website URL>")
+                        connection.set("https://github.com/rechnerherz/aoprofiling.git")
+                        developerConnection.set("git@github.com:rechnerherz/aoprofiling.git")
+                        url.set("https://github.com/rechnerherz/aoprofiling")
                     }
                 }
             }
@@ -137,8 +138,8 @@ subprojects {
 
 tasks.named("afterReleaseBuild") {
     dependsOn(listOf(
-            ":aoprofiling-autoconfigure:publish",
-            ":aoprofiling-starter:publish",
-            ":aoprofiling:publish"
+        ":aoprofiling-autoconfigure:publish",
+        ":aoprofiling-starter:publish",
+        ":aoprofiling:publish"
     ))
 }

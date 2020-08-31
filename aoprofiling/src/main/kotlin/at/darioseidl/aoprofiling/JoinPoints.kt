@@ -1,4 +1,4 @@
-package at.darioseidl.aoprofiling
+package at.rechnerherz.aoprofiling
 
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.reflect.MethodSignature

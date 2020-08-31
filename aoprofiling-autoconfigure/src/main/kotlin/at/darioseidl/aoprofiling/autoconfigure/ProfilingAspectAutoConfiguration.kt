@@ -1,8 +1,8 @@
-package at.darioseidl.aoprofiling.autoconfigure
+package at.rechnerherz.aoprofiling.autoconfigure
 
-import at.darioseidl.aoprofiling.ProfilingAspect
-import at.darioseidl.aoprofiling.ProfilingProperties
-import at.darioseidl.aoprofiling.ProfilingSummaryAspect
+import at.rechnerherz.aoprofiling.ProfilingAspect
+import at.rechnerherz.aoprofiling.ProfilingProperties
+import at.rechnerherz.aoprofiling.ProfilingSummaryAspect
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties

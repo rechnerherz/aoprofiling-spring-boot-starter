@@ -1,4 +1,4 @@
-package at.darioseidl.aoprofiling
+package at.rechnerherz.aoprofiling
 
 /**
  * If a method is annotated with [NoProfiling] it will not be advised by the [ProfilingAspect].
