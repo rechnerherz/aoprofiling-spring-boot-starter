@@ -25,7 +25,7 @@ class ProfilingSummaryAspect(
     override fun getOrder(): Int =
         properties.profilingSummaryAspectOrder
 
-    @Around("@annotation(${ProfilingAspect.GROUP}.ProfilingSummary) && @annotation(profilingSummary)")
+    @Around("@annotation(${ProfilingAspect.PACKAGE}.ProfilingSummary) && @annotation(profilingSummary)")
     fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {
         if (profilingSummary.clearBefore)
             profilingAspect.clear()
