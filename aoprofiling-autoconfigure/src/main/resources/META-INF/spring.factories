@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=at.darioseidl.aoprofiling.autoconfigure.ProfilingAspectAutoConfiguration
