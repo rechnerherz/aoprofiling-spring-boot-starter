@@ -11,6 +11,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // TODO: spring-configuration-metadata.json generation is not working
     // Spring Annotation Processor
     // https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html#configuration-metadata-annotation-processor
     kapt("org.springframework.boot:spring-boot-configuration-processor")

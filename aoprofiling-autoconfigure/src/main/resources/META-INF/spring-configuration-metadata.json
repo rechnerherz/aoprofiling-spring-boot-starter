@@ -1,0 +1,53 @@
+{
+  "groups": [
+    {
+      "name": "at.rechnerherz.aoprofiling",
+      "type": "at.rechnerherz.aoprofiling.ProfilingProperties",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "at.rechnerherz.aoprofiling.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable aspect oriented profiling.",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "at.rechnerherz.aoprofiling.ignore",
+      "type": "java.lang.String",
+      "description": "A comma-separated list of target.method names to ignore.",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "at.rechnerherz.aoprofiling.mode",
+      "type": "at.rechnerherz.aoprofiling.ProfilingProperties$Mode",
+      "description": "Display mode: TREE adds line drawings to the call tree, VERBOSE prints to multiple lines, PLAIN does neither.",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties"
+    },
+    {
+      "name": "at.rechnerherz.aoprofiling.truncate",
+      "type": "java.lang.Integer",
+      "description": "Strings will be truncated to at most this number of characters, unless mode is VERBOSE.",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties",
+      "defaultValue": 100
+    },
+    {
+      "name": "at.rechnerherz.aoprofiling.profilingAspectOrder",
+      "type": "java.lang.Integer",
+      "description": "Order of the ProfilingAspect. Should be lower than the transaction advisor order.",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties",
+      "defaultValue": -1
+    },
+    {
+      "name": "at.rechnerherz.aoprofiling.profilingSummaryAspectOrder",
+      "type": "java.lang.Integer",
+      "description": "Order of the ProfilingSummaryAspect. Should be lower than the profilingAspectOrder.",
+      "sourceType": "at.rechnerherz.aoprofiling.ProfilingProperties",
+      "defaultValue": -1
+    }
+  ],
+  "hints": []
+}

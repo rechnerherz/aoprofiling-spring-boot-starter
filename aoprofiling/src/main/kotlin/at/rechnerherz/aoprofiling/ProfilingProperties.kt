@@ -9,7 +9,7 @@ class ProfilingProperties {
         PLAIN, TREE, VERBOSE
     }
 
-    /** Whether to enable method tracing. */
+    /** Whether to enable aspect oriented profiling. */
     var enabled: Boolean = false
 
     /** Display mode: TREE adds line drawings to the call tree, VERBOSE prints to multiple lines, PLAIN does neither. */
@@ -22,12 +22,12 @@ class ProfilingProperties {
     var ignore: String = ""
 
     /**
-     * Order of the ProfilingAspect, should be lower than the transaction advisor order.
+     * Order of the ProfilingAspect. Should be lower than the transaction advisor order.
      */
     var profilingAspectOrder = -1
 
     /**
-     * Order of the ProfilingSummaryAspect, should be lower than the profilingAspectOrder.
+     * Order of the ProfilingSummaryAspect. Should be lower than the profilingAspectOrder.
      */
     var profilingSummaryAspectOrder = -2
 }
