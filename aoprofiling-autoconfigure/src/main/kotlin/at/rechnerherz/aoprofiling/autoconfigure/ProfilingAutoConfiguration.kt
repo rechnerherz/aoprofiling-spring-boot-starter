@@ -11,23 +11,23 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties(ProfilingProperties::class)
-class ProfilingAspectAutoConfiguration {
+class ProfilingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(name = ["aoprofiling.enabled"], havingValue = "true")
+    @ConditionalOnProperty(prefix = "at.rechnerherz.aoprofiling", name = ["enabled"], havingValue = "true")
     fun profilingAspect(
         properties: ProfilingProperties,
     ): ProfilingAspect =
-            ProfilingAspect(properties)
+        ProfilingAspect(properties)
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(name = ["aoprofiling.enabled"], havingValue = "true")
+    @ConditionalOnProperty(prefix = "at.rechnerherz.aoprofiling", name = ["enabled"], havingValue = "true")
     fun profilingSummaryAspect(
         profilingAspect: ProfilingAspect,
         properties: ProfilingProperties,
     ): ProfilingSummaryAspect =
-            ProfilingSummaryAspect(properties, profilingAspect)
+        ProfilingSummaryAspect(properties, profilingAspect)
 
 }
