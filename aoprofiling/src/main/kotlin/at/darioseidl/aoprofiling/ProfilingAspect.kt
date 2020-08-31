@@ -40,24 +40,16 @@ import java.util.*
 @Component
 @Order(-1)
 class ProfilingAspect(
-    internal val properties: ProfilingProperties
+    private val properties: ProfilingProperties
 ) {
 
-    internal val log = KotlinLogging.logger {}
+    private val log = KotlinLogging.logger {}
 
-    internal val threadLocalStack: ThreadLocal<Stack<ProfilingInfo>> =
+    private val threadLocalStack: ThreadLocal<Stack<ProfilingInfo>> =
         ThreadLocal.withInitial { Stack<ProfilingInfo>() }
 
-    internal val threadLocalInfos: ThreadLocal<LinkedMultiValueMap<String, ProfilingInfo>> =
+    private val threadLocalInfos: ThreadLocal<LinkedMultiValueMap<String, ProfilingInfo>> =
         ThreadLocal.withInitial { LinkedMultiValueMap<String, ProfilingInfo>() }
-
-    internal fun clear() {
-        threadLocalInfos.get().clear()
-        threadLocalStack.get().clear()
-    }
-
-    private val enabled: Boolean
-        get() = properties.enabled
 
     private val verbose: Boolean
         get() = properties.mode == ProfilingProperties.Mode.VERBOSE
@@ -73,57 +65,47 @@ class ProfilingAspect(
     \*------------------------------------*/
 
     @Pointcut("execution(public * *(..))")
-    fun publicMethod() {
-    }
+    fun publicMethod() {}
 
     @Pointcut("within(@org.springframework.stereotype.Service *)")
-    fun withinService() {
-    }
+    fun withinService() {}
 
     @Pointcut("within(@org.springframework.stereotype.Controller *)")
-    fun withinController() {
-    }
+    fun withinController() {}
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
-    fun withinRestController() {
-    }
+    fun withinRestController() {}
 
     @Pointcut(
         "within(@org.springframework.data.rest.webmvc.BasePathAwareController *)" +
                 " && !within(org.springframework.data.rest.webmvc.*)"
     )
-    fun withinBasePathAwareController() {
-    }
+    fun withinBasePathAwareController() {}
 
     @Pointcut(
         "within(@org.springframework.data.rest.webmvc.RepositoryRestController *)" +
                 " && !within(org.springframework.data.rest.webmvc.*)"
     )
-    fun withinRepositoryRestController() {
-    }
+    fun withinRepositoryRestController() {}
 
     @Pointcut("within(org.springframework.data.repository.Repository+)")
-    fun withinRepository() {
-    }
+    fun withinRepository() {}
 
     @Pointcut("within(@org.springframework.data.rest.core.annotation.RepositoryEventHandler *)")
-    fun withinRepositoryEventHandler() {
-    }
+    fun withinRepositoryEventHandler() {}
 
     @Pointcut(
         "within(@at.darioseidl.aop.NoProfiling *)" +
                 " || @annotation(at.darioseidl.aop.NoProfiling)"
     )
-    fun noProfiling() {
-    }
+    fun noProfiling() {}
 
     @Pointcut(
         "execution(public String toString())" +
                 " || execution(public int hashCode())" +
                 " || execution(public boolean equals(Object))"
     )
-    fun boilerplate() {
-    }
+    fun boilerplate() {}
 
     /*------------------------------------*\
      * Advices
@@ -158,13 +140,53 @@ class ProfilingAspect(
         profileMethod(joinPoint)
 
     /*------------------------------------*\
+     * Summary Methods
+    \*------------------------------------*/
+
+    fun clear() {
+        threadLocalInfos.get().clear()
+        threadLocalStack.get().clear()
+    }
+
+    fun summary(): String {
+        val infoMap: LinkedMultiValueMap<String, ProfilingInfo> = threadLocalInfos.get()
+        val totalMillis: Long = infoMap.values.sumOf { infos -> infos.sumOf { it.millis } }
+        val sb = StringBuilder()
+        sb.append("Total time measured on thread '")
+        sb.append(Thread.currentThread().name)
+        sb.append("': ")
+        sb.append(totalMillis)
+        sb.append(" ms\n")
+
+        sb.append(HR)
+        sb.append("    #     ms    avg     %    method\n")
+        sb.append(HR)
+        for ((_: String, infos: List<ProfilingInfo>) in infoMap) {
+            val count: Int = infos.size
+            val ms: Long = infos.sumOf { it.millis }
+            val avg: Int = (ms.toDouble() / count).toInt()
+            val percent: Int = (ms.toDouble() / totalMillis * 100.0).toInt()
+            sb.append(
+                String.format(
+                    "%5d %6d %6d %5d    %s%s%n",
+                    count, ms, avg, percent,
+                    summaryTreeDrawing(infos.first().callStack.size),
+                    infos.first().signature
+                )
+            )
+        }
+        sb.append(HR)
+        return sb.toString()
+    }
+
+    /*------------------------------------*\
      * Helper Methods
     \*------------------------------------*/
 
     private fun profileMethod(joinPoint: ProceedingJoinPoint): Any? {
         val targetAndMethodName = joinPoint.targetAndMethodName()
 
-        if (!enabled || properties.ignore.split(",").contains(targetAndMethodName))
+        if (!properties.enabled || properties.ignore.split(",").contains(targetAndMethodName))
             return joinPoint.proceed()
 
         val stack: Stack<ProfilingInfo> = threadLocalStack.get()
@@ -216,4 +238,10 @@ class ProfilingAspect(
     private fun treeDrawing(size: Int, after: Boolean = false): String =
         if (tree) ((if (size > 1) "├" + "─".repeat(size - 1) else if (after) "└" else "┌") + " ") else ""
 
+    private fun summaryTreeDrawing(size: Int): String =
+        if (tree) ((if (size > 0) "├" + "─".repeat(size) else "└") + " ") else ""
+
+    companion object {
+        const val HR = "────────────────────────────────────────────────────────────────────────────────\n"
+    }
 }
