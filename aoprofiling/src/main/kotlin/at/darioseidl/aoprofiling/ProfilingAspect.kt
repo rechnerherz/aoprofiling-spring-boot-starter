@@ -1,14 +1,16 @@
 package at.darioseidl.aoprofiling
 
-import mu.KotlinLogging
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
+import org.slf4j.LoggerFactory
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
+import sun.jvm.hotspot.HelloWorld
 import java.util.*
+
 
 /**
  * The [ProfilingAspect] traces the execution of public methods
@@ -43,7 +45,7 @@ class ProfilingAspect(
     private val properties: ProfilingProperties
 ) {
 
-    private val log = KotlinLogging.logger {}
+    private val log = LoggerFactory.getLogger(ProfilingAspect::class.java)
 
     private val threadLocalStack: ThreadLocal<Stack<ProfilingInfo>> =
         ThreadLocal.withInitial { Stack<ProfilingInfo>() }
@@ -196,9 +198,9 @@ class ProfilingAspect(
         try {
             stack.start(targetAndMethodName)
 
-            log.trace {
+            if (log.isTraceEnabled) {
                 val tree = treeDrawing(stack.size)
-                "$tree$signature"
+                log.trace("$tree$signature")
             }
 
             returnValue = joinPoint.proceed()
@@ -206,11 +208,11 @@ class ProfilingAspect(
         } finally {
             val executionMillis: Long = stack.stop()
 
-            log.trace {
+            if (log.isTraceEnabled) {
                 val tree = treeDrawing(stack.size, true)
                 val returnValueString = joinPoint.returnValueToString(returnValue, verbose, truncate)
                 val separator = if (verbose) "\n" else ""
-                "$tree$signature returned $returnValueString$separator — execution time: $executionMillis ms"
+                log.trace("$tree$signature returned $returnValueString$separator — execution time: $executionMillis ms")
             }
 
             stack.done()

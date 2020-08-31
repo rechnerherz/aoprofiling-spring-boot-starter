@@ -1,11 +1,13 @@
 package at.darioseidl.aoprofiling
 
-import mu.KotlinLogging
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
+import org.slf4j.LoggerFactory
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
+import sun.jvm.hotspot.HelloWorld
+
 
 /**
  * The [ProfilingSummaryAspect] prints a profiling summary after execution of a method annotated with [ProfilingSummary].
@@ -20,7 +22,7 @@ class ProfilingSummaryAspect(
     private val properties: ProfilingProperties,
     private val profilingAspect: ProfilingAspect
 ) {
-    private val log = KotlinLogging.logger {}
+    private val log = LoggerFactory.getLogger(ProfilingSummaryAspect::class.java)
 
     @Around("@annotation(at.darioseidl.aop.ProfilingSummary) && @annotation(profilingSummary)")
     fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {
