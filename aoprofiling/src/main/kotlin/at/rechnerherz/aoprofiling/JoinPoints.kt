@@ -80,7 +80,6 @@ fun cleanToString(
         is Collection<*> -> any.cleanToString()
         is ApplicationArguments -> any.sourceArgs.joinToString()
         is MultipartFile -> any.cleanToString()
-//        is Continuation<*> -> "[coroutine]"
         is HttpServletRequest -> any.cleanToString()
         is HttpServletResponse -> any.cleanToString()
         else -> any.toString()
