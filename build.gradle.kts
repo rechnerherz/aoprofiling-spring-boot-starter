@@ -23,6 +23,14 @@ plugins {
     // Maven Publish plugin
     // https://docs.gradle.org/current/userguide/publishing_maven.html
     `maven-publish`
+
+    // Spring Boot dependency management
+    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
+    id("org.springframework.boot") version "2.3.3.RELEASE" apply false
+}
+
+repositories {
+    jcenter()
 }
 
 group = "at.rechnerherz"
@@ -40,11 +48,20 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
+    apply(plugin = "io.spring.dependency-management")
 
     group = "at.rechnerherz"
 
     repositories {
         jcenter()
+    }
+
+    // Import the Spring Boot Maven BOM
+    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#managing-dependencies-dependency-management-plugin-using-in-isolation
+    the<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension>().apply {
+        imports {
+            mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+        }
     }
 
     java {
@@ -106,7 +123,6 @@ subprojects {
                 }
             }
         }
-        println(configurations.runtime.allDependencies)
     }
 }
 
