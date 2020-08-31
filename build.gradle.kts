@@ -27,15 +27,6 @@ plugins {
 
 group = "at.rechnerherz"
 
-fun Project.envConfig() = object : kotlin.properties.ReadOnlyProperty<Any?, String?> {
-    override fun getValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>): String? =
-        if (extensions.extraProperties.has(property.name)) {
-            extensions.extraProperties[property.name] as? String
-        } else {
-            System.getenv(property.name)
-        }
-}
-
 release {
     buildTasks = listOf("releaseBuild")
 }
