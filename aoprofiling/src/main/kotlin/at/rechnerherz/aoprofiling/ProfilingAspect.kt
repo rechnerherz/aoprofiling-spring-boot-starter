@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.slf4j.LoggerFactory
 import org.springframework.core.Ordered
-import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
 import java.util.*
 
@@ -39,8 +38,7 @@ import java.util.*
  * [Advising transactional operations](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-declarative-applying-more-than-just-tx-advice)
  */
 @Aspect
-@Component
-class ProfilingAspect(
+open class ProfilingAspect(
     private val properties: ProfilingProperties
 ) : Ordered {
 
