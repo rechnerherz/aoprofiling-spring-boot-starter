@@ -6,5 +6,4 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     annotationProcessor ("org.springframework.boot:spring-boot-autoconfigure-processor:$springBootVersion")
-    annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 }
