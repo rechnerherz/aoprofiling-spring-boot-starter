@@ -1,13 +1,25 @@
 plugins {
-    val kotlinVersion = "1.4.0"
-    val springBootVersion = "2.3.3.RELEASE"
+
+    // Java Library plugin
+    // https://docs.gradle.org/current/userguide/java_library_plugin.html
     `java-library`
-    id("org.springframework.boot") version springBootVersion apply false
-    id("io.spring.dependency-management") version "1.0.9.RELEASE" apply false
-    kotlin("jvm") version kotlinVersion apply false
-    kotlin("plugin.spring") version kotlinVersion apply false
+
+    // Kotlin JVM plugin (only used to configure subprojects here)
+    // https://kotlinlang.org/docs/reference/using-gradle.html
+    kotlin("jvm") version "1.4.0" apply false
+
+    // Kotlin Spring compiler plugin to make classes open by default
+    // https://kotlinlang.org/docs/reference/compiler-plugins.html
+    kotlin("plugin.spring") version "1.4.0"
+
+    // Idea plugin
+    // https://docs.gradle.org/current/userguide/idea_plugin.html
     id("idea")
-    id("net.researchgate.release") version "2.6.0"
+
+    // Gradle Release plugin
+    // https://github.com/researchgate/gradle-release
+    id("net.researchgate.release") version "2.8.1"
+
     maven
     `maven-publish`
 }
@@ -32,14 +44,13 @@ tasks.register("releaseBuild") {
 }
 
 subprojects {
-    apply(plugin = "java")
+    apply(plugin = "java-library")
+    apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
 
     group = "at.darioseidl.aoprofiling"
 
     repositories {
-        mavenLocal()
-        mavenCentral()
         jcenter()
     }
 

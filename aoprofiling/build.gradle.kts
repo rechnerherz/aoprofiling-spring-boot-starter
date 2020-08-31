@@ -1,13 +1,6 @@
-plugins {
-    `java-library`
-    id("org.jetbrains.kotlin.jvm")
-}
-
-repositories {
-    mavenCentral()
-}
 
 val springBootVersion: String by extra
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter:$springBootVersion")
