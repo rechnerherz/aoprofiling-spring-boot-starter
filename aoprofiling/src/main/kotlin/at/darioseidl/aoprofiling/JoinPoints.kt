@@ -1,13 +1,12 @@
 package at.darioseidl.aoprofiling
 
-import com.google.common.base.MoreObjects
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.reflect.MethodSignature
 import org.springframework.aop.framework.Advised
 import org.springframework.boot.ApplicationArguments
-//import org.springframework.web.multipart.MultipartFile
-//import javax.servlet.http.HttpServletRequest
-//import javax.servlet.http.HttpServletResponse
+import org.springframework.web.multipart.MultipartFile
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 fun JoinPoint.targetAndMethodName(): String =
     getTargetName() + "." + signature.name
@@ -79,11 +78,11 @@ fun cleanToString(
     val string: String = when (any) {
         is Array<*> -> any.cleanToString()
         is Collection<*> -> any.cleanToString()
-//        is ApplicationArguments -> any.sourceArgs.joinToString()
-//        is MultipartFile -> any.cleanToString()
+        is ApplicationArguments -> any.sourceArgs.joinToString()
+        is MultipartFile -> any.cleanToString()
 //        is Continuation<*> -> "[coroutine]"
-//        is HttpServletRequest -> any.cleanToString()
-//        is HttpServletResponse -> any.cleanToString()
+        is HttpServletRequest -> any.cleanToString()
+        is HttpServletResponse -> any.cleanToString()
         else -> any.toString()
     }
     return if (prettyPrint)
@@ -130,31 +129,21 @@ private fun Collection<*>.cleanToString(): String {
     }
 }
 
-//private fun MultipartFile.cleanToString(): String =
-//    MoreObjects
-//        .toStringHelper(MultipartFile::class.java.simpleName)
-//        .add("name", name)
-//        .toString()
-//
-//private fun HttpServletRequest.cleanToString(): String =
-//    MoreObjects
-//        .toStringHelper(this)
-//        .add("method", method)
-//        .add("requestURI", requestURI)
-//        .toString()
-//
-//private fun HttpServletResponse.cleanToString(): String =
-//    MoreObjects.toStringHelper(this)
-//        .add("status", status)
-//        .toString()
+private fun MultipartFile.cleanToString(): String =
+    "${this::class.simpleName}(name=$name)"
 
+private fun HttpServletRequest.cleanToString(): String =
+    "${this::class.simpleName}(method=$method, requestURI=$requestURI)"
+
+private fun HttpServletResponse.cleanToString(): String =
+    "${this::class.simpleName}(status=$status)"
 
 /**
  * Truncate a string to be [maxLength] characters long. If the string is truncated the result ends with [truncationIndicator].
  */
 private fun String.truncate(maxLength: Int, truncationIndicator: String = "..."): String =
-        if (length <= maxLength) this
-        else StringBuilder(maxLength)
-                .append(this, 0, kotlin.math.max(maxLength - truncationIndicator.length, 0))
-                .append(truncationIndicator)
-                .toString()
+    if (length <= maxLength) this
+    else StringBuilder(maxLength)
+        .append(this, 0, kotlin.math.max(maxLength - truncationIndicator.length, 0))
+        .append(truncationIndicator)
+        .toString()
