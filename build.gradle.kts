@@ -94,19 +94,10 @@ subprojects {
         }
     }
 
-    val repositoryUser by envConfig()
-    val repositoryPassword by envConfig()
     publishing {
         repositories {
             maven {
-                name = "MavenCentral"
-                val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-                val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-                url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-                credentials {
-                    username = repositoryUser
-                    password = repositoryPassword
-                }
+                url = uri("$buildDir/repository")
             }
         }
         publications {
