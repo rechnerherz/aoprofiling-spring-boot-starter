@@ -12,7 +12,7 @@ class ProfilingProperties {
     }
 
     /** Whether to enable method tracing. */
-    var enabled: Boolean = true
+    var enabled: Boolean = false
 
     /** Display mode: TREE adds line drawings to the call tree, VERBOSE prints to multiple lines, PLAIN does neither. */
     var mode: Mode = Mode.TREE
