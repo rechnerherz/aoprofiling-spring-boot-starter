@@ -20,7 +20,7 @@ class ProfilingSummaryAspect(
 ) {
     private val log = LoggerFactory.getLogger(ProfilingSummaryAspect::class.java)
 
-    @Around("@annotation(at.darioseidl.aop.ProfilingSummary) && @annotation(profilingSummary)")
+    @Around("@annotation(${ProfilingAspect.GROUP}.ProfilingSummary) && @annotation(profilingSummary)")
     fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {
         if (profilingSummary.clearBefore)
             profilingAspect.clear()
@@ -32,6 +32,5 @@ class ProfilingSummaryAspect(
                 log.debug(profilingAspect.summary())
         }
     }
-
 
 }

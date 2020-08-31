@@ -93,8 +93,8 @@ class ProfilingAspect(
     fun withinRepositoryEventHandler() {}
 
     @Pointcut(
-        "within(@at.darioseidl.aop.NoProfiling *)" +
-                " || @annotation(at.darioseidl.aop.NoProfiling)"
+        "within(@${GROUP}.NoProfiling *)" +
+                " || @annotation(${GROUP}.NoProfiling)"
     )
     fun noProfiling() {}
 
@@ -240,6 +240,7 @@ class ProfilingAspect(
         if (tree) ((if (size > 0) "├" + "─".repeat(size) else "└") + " ") else ""
 
     companion object {
+        const val GROUP = "at.darioseidl.aoprofiling"
         const val HR = "────────────────────────────────────────────────────────────────────────────────\n"
     }
 }
