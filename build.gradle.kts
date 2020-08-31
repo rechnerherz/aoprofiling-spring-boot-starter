@@ -130,7 +130,7 @@ subprojects {
 tasks.named("afterReleaseBuild") {
     dependsOn(listOf(
         ":aoprofiling-autoconfigure:publish",
-        ":aoprofiling-starter:publish",
+        ":aoprofiling-spring-boot-starter:publish",
         ":aoprofiling:publish"
     ))
 }
