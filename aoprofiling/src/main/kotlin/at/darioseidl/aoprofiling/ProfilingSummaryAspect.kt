@@ -17,7 +17,6 @@ import sun.jvm.hotspot.HelloWorld
  */
 @Aspect
 @Component
-@Order(-2)
 class ProfilingSummaryAspect(
     private val properties: ProfilingProperties,
     private val profilingAspect: ProfilingAspect

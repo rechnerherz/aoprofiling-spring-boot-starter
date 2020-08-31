@@ -40,7 +40,6 @@ import java.util.*
  */
 @Aspect
 @Component
-@Order(-1)
 class ProfilingAspect(
     private val properties: ProfilingProperties
 ) {
