@@ -15,19 +15,19 @@ import java.util.*
 /**
  * The [ProfilingAspect] traces the execution of public methods
  *
- * - within [org.springframework.stereotype.Service] classes
+ * - within `org.springframework.stereotype.Service` classes
  *
- * - within [org.springframework.stereotype.Controller] classes
+ * - within `org.springframework.stereotype.Controller` classes
  *
- * - within [org.springframework.web.bind.annotation.RestController] classes
+ * - within `org.springframework.web.bind.annotation.RestController` classes
  *
- * - within [org.springframework.data.rest.webmvc.BasePathAwareController] classes
+ * - within `org.springframework.data.rest.webmvc.BasePathAwareController` classes
  *
- *     (this also includes [org.springframework.data.rest.webmvc.RepositoryRestController] classes)
+ *     (this also includes `org.springframework.data.rest.webmvc.RepositoryRestController` classes)
  *
- * - within [org.springframework.data.repository.Repository] and sub-classes
+ * - within `org.springframework.data.repository.Repository` and sub-classes
  *
- * - within [org.springframework.data.rest.core.annotation.RepositoryEventHandler] classes
+ * - within `org.springframework.data.rest.core.annotation.RepositoryEventHandler` classes
  *
  * When using Spring proxy-based AOP, it only works for non-final public methods of non-final public Spring beans,
  * when they are not self invocated.
