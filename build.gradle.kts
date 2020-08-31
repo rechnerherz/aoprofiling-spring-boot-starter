@@ -8,10 +8,6 @@ plugins {
     // https://kotlinlang.org/docs/reference/using-gradle.html
     kotlin("jvm") version "1.4.0" apply false
 
-    // Kotlin Spring compiler plugin to make classes open by default
-    // https://kotlinlang.org/docs/reference/compiler-plugins.html
-    kotlin("plugin.spring") version "1.4.0"
-
     // Idea plugin
     // https://docs.gradle.org/current/userguide/idea_plugin.html
     id("idea")
