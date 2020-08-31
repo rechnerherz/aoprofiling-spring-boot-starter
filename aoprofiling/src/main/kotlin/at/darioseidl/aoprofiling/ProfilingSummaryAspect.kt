@@ -4,6 +4,7 @@ import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.slf4j.LoggerFactory
+import org.springframework.core.Ordered
 import org.springframework.stereotype.Component
 
 /**
@@ -17,8 +18,12 @@ import org.springframework.stereotype.Component
 class ProfilingSummaryAspect(
     private val properties: ProfilingProperties,
     private val profilingAspect: ProfilingAspect
-) {
+): Ordered {
+
     private val log = LoggerFactory.getLogger(ProfilingSummaryAspect::class.java)
+
+    override fun getOrder(): Int =
+        properties.profilingSummaryAspectOrder
 
     @Around("@annotation(${ProfilingAspect.GROUP}.ProfilingSummary) && @annotation(profilingSummary)")
     fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {

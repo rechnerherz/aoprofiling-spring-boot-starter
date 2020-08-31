@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.slf4j.LoggerFactory
+import org.springframework.core.Ordered
 import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
 import java.util.*
@@ -29,9 +30,11 @@ import java.util.*
  * When using Spring proxy-based AOP, it only works for non-final public methods of non-final public Spring beans,
  * when they are not self invocated.
  *
- * To avoid any overhead in production, it is only registered in development.
+ * To avoid any overhead in production, only enable it in development.
  *
- * The order is set to run before the transaction advice.
+ * To make sure that the ProfilingAspect is executed before (around) transactions, set the
+ * transaction advisor order to a lower priority (higher number) than the [ProfilingProperties.profilingAspectOrder],
+ * e.g. with `@EnableTransactionManagement(order = 0)`.
  *
  * [Advising transactional operations](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-declarative-applying-more-than-just-tx-advice)
  */
@@ -39,7 +42,7 @@ import java.util.*
 @Component
 class ProfilingAspect(
     private val properties: ProfilingProperties
-) {
+) : Ordered {
 
     private val log = LoggerFactory.getLogger(ProfilingAspect::class.java)
 
@@ -55,8 +58,8 @@ class ProfilingAspect(
     private val tree: Boolean
         get() = properties.mode == ProfilingProperties.Mode.TREE
 
-    private val truncate: Int
-        get() = properties.truncate
+    override fun getOrder(): Int =
+        properties.profilingAspectOrder
 
     /*------------------------------------*\
      * Pointcuts
@@ -188,7 +191,7 @@ class ProfilingAspect(
             return joinPoint.proceed()
 
         val stack: Stack<ProfilingInfo> = threadLocalStack.get()
-        val signature = joinPoint.signature(verbose, truncate)
+        val signature = joinPoint.signature(verbose, properties.truncate)
         var returnValue: Any? = "[no return value obtained]"
 
         try {
@@ -206,7 +209,7 @@ class ProfilingAspect(
 
             if (log.isTraceEnabled) {
                 val tree = treeDrawing(stack.size, true)
-                val returnValueString = joinPoint.returnValueToString(returnValue, verbose, truncate)
+                val returnValueString = joinPoint.returnValueToString(returnValue, verbose, properties.truncate)
                 val separator = if (verbose) "\n" else ""
                 log.trace("$tree$signature returned $returnValueString$separator — execution time: $executionMillis ms")
             }
@@ -243,4 +246,5 @@ class ProfilingAspect(
         const val GROUP = "at.darioseidl.aoprofiling"
         const val HR = "────────────────────────────────────────────────────────────────────────────────\n"
     }
+
 }

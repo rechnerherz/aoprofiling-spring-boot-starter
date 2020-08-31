@@ -28,4 +28,14 @@ class ProfilingProperties {
     /** A comma-separated list of target.method names to ignore. */
     @Pattern(regexp = """|(\S+(,\S+)*)""")
     var ignore: String = ""
+
+    /**
+     * The order of the ProfilingAspect, should be lower than the transaction advisor order.
+     */
+    var profilingAspectOrder = -1
+
+    /**
+     * The order of the ProfilingSummaryAspect, should be lower than the profilingAspectOrder.
+     */
+    var profilingSummaryAspectOrder = -2
 }
