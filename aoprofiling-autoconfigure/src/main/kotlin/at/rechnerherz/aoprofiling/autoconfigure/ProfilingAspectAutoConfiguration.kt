@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties(ProfilingProperties::class)
-open class ProfilingAspectAutoConfiguration {
+class ProfilingAspectAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean

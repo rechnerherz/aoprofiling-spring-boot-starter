@@ -8,6 +8,14 @@ plugins {
     // https://kotlinlang.org/docs/reference/using-gradle.html
     kotlin("jvm") version "1.4.0" apply false
 
+    // Kotlin Spring compiler plugin to make classes open by default (only used to configure subprojects here)
+    // https://kotlinlang.org/docs/reference/compiler-plugins.html
+    kotlin("plugin.spring") version "1.4.0" apply false
+
+    // Spring Boot dependency management
+    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
+    id("org.springframework.boot") version "2.3.3.RELEASE" apply false
+
     // Idea plugin
     // https://docs.gradle.org/current/userguide/idea_plugin.html
     id("idea")
@@ -19,10 +27,6 @@ plugins {
     // Maven Publish plugin
     // https://docs.gradle.org/current/userguide/publishing_maven.html
     `maven-publish`
-
-    // Spring Boot dependency management
-    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
-    id("org.springframework.boot") version "2.3.3.RELEASE" apply false
 }
 
 repositories {
@@ -43,6 +47,7 @@ subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
     apply(plugin = "kotlin")
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "maven-publish")
     apply(plugin = "io.spring.dependency-management")
 

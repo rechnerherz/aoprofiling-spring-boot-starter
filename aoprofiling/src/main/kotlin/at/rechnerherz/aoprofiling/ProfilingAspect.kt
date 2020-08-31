@@ -38,7 +38,7 @@ import java.util.*
  * [Advising transactional operations](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-declarative-applying-more-than-just-tx-advice)
  */
 @Aspect
-open class ProfilingAspect(
+class ProfilingAspect(
     private val properties: ProfilingProperties
 ) : Ordered {
 

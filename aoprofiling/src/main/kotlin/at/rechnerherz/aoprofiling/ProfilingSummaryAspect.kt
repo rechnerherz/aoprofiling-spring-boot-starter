@@ -13,7 +13,7 @@ import org.springframework.core.Ordered
  * to make sure that the summary is printed after profiling the advised method.
  */
 @Aspect
-open class ProfilingSummaryAspect(
+class ProfilingSummaryAspect(
     private val properties: ProfilingProperties,
     private val profilingAspect: ProfilingAspect
 ): Ordered {
