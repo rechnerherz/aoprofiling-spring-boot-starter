@@ -25,7 +25,7 @@ plugins {
     `maven-publish`
 }
 
-group = "at.rechnerherz.aoprofiling"
+group = "at.rechnerherz"
 
 fun Project.envConfig() = object : kotlin.properties.ReadOnlyProperty<Any?, String?> {
     override fun getValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>): String? =
@@ -45,25 +45,29 @@ tasks.register("releaseBuild") {
 }
 
 subprojects {
+    apply(plugin = "java")
     apply(plugin = "java-library")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
 
-    group = "at.rechnerherz.aoprofiling"
+    group = "at.rechnerherz"
 
     repositories {
         jcenter()
     }
 
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-        kotlinOptions {
-            suppressWarnings = true
-        }
-    }
-
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    // Set options for all Kotlin compilation tasks
+    // https://kotlinlang.org/docs/reference/using-gradle.html
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            // Set target version for generate JVM bytecode
+            jvmTarget = "1.8"
+        }
     }
 
     tasks {
@@ -73,39 +77,17 @@ subprojects {
             from(sourceSets["main"].allSource)
         }
 
-        val javadocJar by creating(Jar::class) {
-            dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
-            archiveClassifier.set("javadoc")
-            from(javadoc)
-        }
-
         artifacts {
             archives(sourcesJar)
-            archives(javadocJar)
             archives(jar)
         }
     }
 
-    tasks.withType<Javadoc> {
-        if (JavaVersion.current().isJava8Compatible) {
-            (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
-        }
-        if (JavaVersion.current().isJava9Compatible) {
-            (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
-        }
-    }
-
     publishing {
-        repositories {
-            maven {
-                url = uri("$buildDir/repository")
-            }
-        }
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifact(tasks["sourcesJar"])
-                artifact(tasks["javadocJar"])
 
                 pom {
                     name.set("AOProfiling Spring Boot Starter")
@@ -133,6 +115,7 @@ subprojects {
                 }
             }
         }
+        println(configurations.runtime.allDependencies)
     }
 }
 
