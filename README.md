@@ -13,42 +13,42 @@ The logging can be fine-tuned, and it can also print a summary of execution time
 A typical output may look like this:
 
 ```
-2020-09-01 10:28:03.502 TRACE 18257 --- [   scheduling-1] a.r.aoprofiling.ProfilingAspect          : ┌ ScheduledService.pendingBookingMailScheduler()
-2020-09-01 10:28:03.520 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ┌ TestDataService.run()
-2020-09-01 10:28:03.524 TRACE 18257 --- [   scheduling-1] a.r.aoprofiling.ProfilingAspect          : ├─ BookingService.pendingBookingMailsScheduler(2020-09-01T08:18:03.510217Z, 2020-09-01T08:23:03.510217Z)
-2020-09-01 10:28:03.533 TRACE 18257 --- [   scheduling-1] a.r.aoprofiling.ProfilingAspect          : ├── BookingRepository.findPendingByDateRange(2020-09-01T08:18:03.510217Z, 2020-09-01T08:23:03.510217Z)
-2020-09-01 10:28:03.538  INFO 18257 --- [           main] at.rechnerherz.tnt.init.TestDataService  : Skip populating data
-2020-09-01 10:28:03.541 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : └ TestDataService.run() returned void — execution time: 21 ms
-2020-09-01 10:28:03.541 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ┌ ScheduledService.run()
-2020-09-01 10:28:03.542 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ SitemapService.generateSitemapAndRobotsTxt(2020-09-01T08:28:03.542382Z)
-2020-09-01 10:28:03.558 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── IntegrationRepository.internalFindAll()
-2020-09-01 10:28:03.641 TRACE 18257 --- [   scheduling-1] a.r.aoprofiling.ProfilingAspect          : ├── BookingRepository.findPendingByDateRange(2020-09-01T08:18:03.510217Z, 2020-09-01T08:23:03.510217Z) returned empty ArrayList — execution time: 108 ms
-2020-09-01 10:28:03.642 TRACE 18257 --- [   scheduling-1] a.r.aoprofiling.ProfilingAspect          : ├─ BookingService.pendingBookingMailsScheduler(2020-09-01T08:18:03.510217Z, 2020-09-01T08:23:03.510217Z) returned void — execution time: 118 ms
-2020-09-01 10:28:03.642 TRACE 18257 --- [   scheduling-1] a.r.aoprofiling.ProfilingAspect          : └ ScheduledService.pendingBookingMailScheduler() returned void — execution time: 140 ms
-2020-09-01 10:28:03.696 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── IntegrationRepository.internalFindAll() returned ArrayList containing 5 Integration — execution time: 138 ms
-2020-09-01 10:28:03.755 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── BundleRepository.findByActiveTrueAndCompanyIn(PersistentSet containing 3 Company)
-2020-09-01 10:28:03.871 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── BundleRepository.findByActiveTrueAndCompanyIn(PersistentSet containing 3 Company) returned ArrayList containing 41 Bundle — execution time: 116 ms
-2020-09-01 10:28:04.044 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ SitemapService.generateSitemapAndRobotsTxt(2020-09-01T08:28:03.542382Z) returned void — execution time: 502 ms
-2020-09-01 10:28:04.045 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ CSBusWatchService.deleteOldBackups(2020-09-01T08:28:03.542382Z)
-2020-09-01 10:28:04.049 DEBUG 18257 --- [           main] a.r.tnt.external.aws.FileActionHandler   : Deleting files in /home/dario/.tnt/tnt-api/backup/csbus older than 2020-03-05T08:28:03.542382Z
-2020-09-01 10:28:04.110 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ CSBusWatchService.deleteOldBackups(2020-09-01T08:28:03.542382Z) returned void — execution time: 65 ms
-2020-09-01 10:28:04.111 TRACE 18257 --- [           main] a.r.aoprofiling.ProfilingAspect          : └ ScheduledService.run() returned void — execution time: 570 ms
-
+2020-09-01 14:37:38.708 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ┌ TestDataService.run()
+2020-09-01 14:37:38.719  INFO 57904 --- [           main] a.r.example.init.TestDataService         : Populating test data ...
+2020-09-01 14:37:38.988 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ AdminRepository.internalSave(Admin{id=null, username=admin@example.com})
+2020-09-01 14:37:39.155 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── AccountRepository.findAuthenticated()
+2020-09-01 14:37:39.161 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── AccountRepository.findAuthenticated() returned null — execution time: 6 ms
+2020-09-01 14:37:39.307 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ AdminRepository.internalSave(Admin{id=null, username=admin@example.com}) returned Admin{id=1, username=admin@example.com} — execution time: 319 ms
+2020-09-01 14:37:39.582 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ CustomerRepository.internalSave(Customer{id=null, username=customer@example.com})
+2020-09-01 14:37:39.772 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── AccountRepository.findAuthenticated()
+2020-09-01 14:37:39.776 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── AccountRepository.findAuthenticated() returned null — execution time: 4 ms
+2020-09-01 14:37:39.803 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ CustomerRepository.internalSave(Customer{id=null, username=customer@example.com}) returned Customer{id=2, username=customer@example.com} — execution time: 221 ms
+2020-09-01 14:37:39.805 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ DocumentService.saveResource(class path resource [dev/sample.pdf], PDF, test-pdf)
+2020-09-01 14:37:39.807 DEBUG 57904 --- [           main] a.r.e.domain.document.DocumentService    : Copying class path resource [dev/sample.pdf] to URL [file:/home/dario/.example/example-api/documents/ac16758a-dbd2-4a94-af5d-2be4774ee33f.pdf]
+2020-09-01 14:37:39.816 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ DocumentService.saveResource(class path resource [dev/sample.pdf], PDF, test-pdf) returned Document{id=null, uuid=ac16758a-dbd2-4a94-af5d-2be4774ee33f} — execution time: 11 ms
+2020-09-01 14:37:39.850 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ DocumentRepository.internalSave(Document{id=null, uuid=ac16758a-dbd2-4a94-af5d-2be4774ee33f})
+2020-09-01 14:37:39.863 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── AccountRepository.findAuthenticated()
+2020-09-01 14:37:39.864 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├── AccountRepository.findAuthenticated() returned null — execution time: 1 ms
+2020-09-01 14:37:39.885 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : ├─ DocumentRepository.internalSave(Document{id=null, uuid=ac16758a-dbd2-4a94-af5d-2be4774ee33f}) returned Document{id=1, uuid=ac16758a-dbd2-4a94-af5d-2be4774ee33f} — execution time: 35 ms
+2020-09-01 14:37:39.886  INFO 57904 --- [           main] a.r.example.init.TestDataService         : Populating test data done
+2020-09-01 14:37:39.902 TRACE 57904 --- [           main] a.r.aoprofiling.ProfilingAspect          : └ TestDataService.run() returned void — execution time: 1194 ms
 ```
  
 # Usage
 
 Add `at.rechnerherz:aoprofiling-starter:1.0.0` to your Gradle or Maven Project. 
 
-Enable the auto-configuration and set the log level to `trace` to see the logging output.
+Enable the auto-configuration and set the log level for the `ProfilingAspect` and `ProfilingSummaryAspect` 
+to `trace`/`debug` to see the logging output.
 
 For example, in your `application-development.properties`:
 
     # Enable AOP profiling
     at.rechnerherz.aoprofiling.enabled=true
     
-    # AOP method profiling log level
+    # AOP profiling log levels
     logging.level.at.rechnerherz.aoprofiling.ProfilingAspect=trace
+    logging.level.at.rechnerherz.aoprofiling.ProfilingSummaryAspect=debug
 
 To avoid any overhead in production, only enable it in development. 
 It makes no sense to run this in a production environment, it would produce way too much logging output.
