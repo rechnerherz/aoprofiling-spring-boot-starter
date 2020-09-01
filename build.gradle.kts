@@ -80,31 +80,31 @@ tasks.named("afterReleaseBuild") {
     ))
 }
 
-val groupName = "at.rechnerherz"
+val groupName: String by project
 
-val projectName = "aoprofiling-spring-boot-starter"
-val projectDescription = "Aspect-oriented profiling Spring Boot starter."
-val projectURL = "https://github.com/rechnerherz/aoprofiling-spring-boot-starter"
+val projectName: String by project
+val projectDescription: String by project
+val projectURL: String by project
 
-val licenseName = "The Apache License, Version 2.0"
-val licenseShortName = "Apache-2.0"
-val licenseURL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+val licenseName: String by project
+val licenseShortName: String by project
+val licenseURL: String by project
 
-val developerID = "darioseidl"
-val developerName = "Dario Seidl"
+val developerID: String by project
+val developerName: String by project
 
-val organizationName = "Rechnerherz"
-val organizationURL = "https.//www.rechnerherz.at"
+val organizationName: String by project
+val organizationURL: String by project
 
-val repoName = "rechnerherz/$projectName"
-val repoURL = "https://github.com/$repoName.git"
-val repoDevURL = "git@github.com:$repoName.git"
+val repoName: String by project
+val repoURL: String by project
+val repoDevURL: String by project
 
-val issueURL = "$projectURL/issues"
+val issueURL: String by project
 
-val publicationName = "mavenJava"
-val bintrayRepo = "maven"
-val bintrayOrganization = "rechnerherz"
+val publicationName: String by project
+val bintrayRepo: String by project
+val bintrayOrganization: String by project
 
 allprojects {
     group = groupName
@@ -203,25 +203,10 @@ subprojects {
             }
         }
     }
+}
 
-    bintray {
-        user = System.getenv("BINTRAY_USER")
-        key = System.getenv("BINTRAY_API_KEY")
-        setPublications(publicationName)
-        pkg.apply {
-            repo = bintrayRepo
-            name = projectName
-            desc = projectDescription
-            userOrg = bintrayOrganization
-            setLicenses(licenseShortName)
-            vcsUrl = projectURL
-            websiteUrl = projectURL
-            issueTrackerUrl = issueURL
-            githubRepo = repoName
-            githubReleaseNotesFile = "README.md"
-            version.apply {
-                name = project.version.toString()
-            }
-        }
-    }
+// Bintray upload has to be configured separately for each subproject
+// https://github.com/bintray/gradle-bintray-plugin/issues/104
+tasks.register("bintrayUploadAll") {
+    dependsOn(subprojects.map { it.tasks.findByName("bintrayUpload") })
 }
