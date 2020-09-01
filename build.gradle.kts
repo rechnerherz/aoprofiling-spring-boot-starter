@@ -63,7 +63,11 @@ tasks.register("releaseBuild") {
 }
 
 tasks.named("afterReleaseBuild") {
-    dependsOn(subprojects.map { it.tasks.findByName("publish") })
+    dependsOn(listOf(
+        ":aoprofiling:publish",
+        ":aoprofiling-autoconfigure:publish",
+        ":aoprofiling-spring-boot-starter:publish"
+    ))
 }
 
 val groupName = "at.rechnerherz"
