@@ -54,8 +54,18 @@ repositories {
     jcenter()
 }
 
+// Workaround for release plugin Kotlin DSL
+// https://github.com/researchgate/gradle-release/issues/281
+fun net.researchgate.release.ReleaseExtension.git(configureFn : net.researchgate.release.GitAdapter.GitConfig.() -> Unit) {
+    (propertyMissing("git") as net.researchgate.release.GitAdapter.GitConfig).configureFn()
+}
+
 release {
     buildTasks = listOf("releaseBuild")
+    git {
+        // Don't push to remote
+        pushToRemote = null
+    }
 }
 
 tasks.register("releaseBuild") {
