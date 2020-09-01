@@ -120,7 +120,3 @@ Apache License, Version 2.0
 Thanks to [roamingthings](https://github.com/roamingthings/workbench-spring-boot-starter-gradle), 
 this project helped me to figure out how to set up this as a Spring Boot starter library and publish it to Maven.
 
-TODO: publish to bintray/jcenter
-TODO: javadoc/kdoc
-TODO: add listeners
-TODO: generate spring-configuration-metadata.json
