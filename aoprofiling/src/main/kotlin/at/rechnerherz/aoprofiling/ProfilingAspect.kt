@@ -31,9 +31,9 @@ import java.util.*
  *
  * To avoid any overhead in production, only enable it in development.
  *
- * To make sure that the ProfilingAspect is executed before (around) transactions, set the
+ * To make sure the ProfilingAspect is executed before (around) transactions, set the
  * transaction advisor order to a lower priority (higher number) than the [ProfilingProperties.profilingAspectOrder],
- * e.g. with `@EnableTransactionManagement(order = 0)`.
+ * e.g. with `@EnableTransactionManagement(order = 0)` in your JPA configuration.
  *
  * [Advising transactional operations](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-declarative-applying-more-than-just-tx-advice)
  */
