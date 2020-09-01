@@ -79,8 +79,8 @@ Strings will be truncated to at most `truncate` number of characters, unless mod
 
 You can print a summary of execution times by annotation a method with `@ProfilingSummary`.
 
-Use `clearBefore=true` to clear the statistics before the method execution 
-(i.e. to only print a summary of the current execution).
+Use `clearBefore=true` (default) to clear the statistics before the method execution 
+(i.e. to only print a summary of the current execution). Set it to `false` to aggregate execution times.
 
 # How it works
 
@@ -103,12 +103,24 @@ The `ProfilingAspect` traces the execution of public methods:
 When using Spring proxy-based AOP, it only works for non-final public methods of non-final public Spring beans,
 when they are not self invocated.
 
+You can read more about Spring AOP in their [documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop).
+
 # Dependencies
 
-The starter is written in Kotlin. It can also be used in a Java project. 
+The starter is written in Kotlin. It can also be used in a Java (1.8+) project. 
 
 It depends on `spring-boot-starter-aop`, `spring-boot-starter-web`, and SLF4J for logging.
 
 # License
 
 Apache License, Version 2.0
+
+# Thanks
+
+Thanks to [roamingthings](https://github.com/roamingthings/workbench-spring-boot-starter-gradle), 
+this project helped me to figure out how to set up this as a Spring Boot starter library and publish it to Maven.
+
+TODO: publish to bintray/jcenter
+TODO: javadoc/kdoc
+TODO: add listeners
+TODO: generate spring-configuration-metadata.json
