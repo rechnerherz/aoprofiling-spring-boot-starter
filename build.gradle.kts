@@ -65,6 +65,7 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "kotlin")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+    apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "maven-publish")
     apply(plugin = "io.spring.dependency-management")
 
@@ -103,16 +104,15 @@ subprojects {
             from(sourceSets["main"].allSource)
         }
 
-        // TODO: generate Javadoc with Dokka
-//        val javadocJar by registering(Jar::class) {
-//            dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
-//            archiveClassifier.set("javadoc")
-//            from(javadoc)
-//        }
+        val javadocJar by registering(Jar::class) {
+            dependsOn("dokkaJavadoc")
+            archiveClassifier.set("javadoc")
+            from(javadoc)
+        }
 
         artifacts {
             archives(sourcesJar)
-//            archives(javadocJar)
+            archives(javadocJar)
             archives(jar)
         }
     }
@@ -122,7 +122,7 @@ subprojects {
             register<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifact(tasks["sourcesJar"])
-//                artifact(tasks["javadocJar"])
+                artifact(tasks["javadocJar"])
 
                 pom {
                     name.set("AOProfiling Spring Boot Starter")
