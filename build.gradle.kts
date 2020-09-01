@@ -20,6 +20,11 @@ plugins {
     // https://docs.gradle.org/current/userguide/idea_plugin.html
     id("idea")
 
+    // Dokka: Kotlin documentation engine
+    // https://github.com/Kotlin/dokka
+    // https://kotlinlang.org/docs/reference/kotlin-doc.html
+    id("org.jetbrains.dokka") version "1.4.0-rc"
+
     // Gradle Release plugin
     // https://github.com/researchgate/gradle-release
     id("net.researchgate.release") version "2.8.1"
@@ -30,10 +35,14 @@ plugins {
 }
 
 repositories {
+    // Gradle plugin portal needed for dokka 1.4.0-rc
+    // https://github.com/Kotlin/dokka
+    gradlePluginPortal()
+
+    // jcenter repository
+    // https://bintray.com/bintray/jcenter
     jcenter()
 }
-
-group = "at.rechnerherz"
 
 release {
     buildTasks = listOf("releaseBuild")
@@ -43,6 +52,14 @@ tasks.register("releaseBuild") {
     dependsOn(subprojects.map { it.tasks.findByName("build") })
 }
 
+tasks.named("afterReleaseBuild") {
+    dependsOn(subprojects.map { it.tasks.findByName("publish") })
+}
+
+allprojects {
+    group = "at.rechnerherz"
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
@@ -50,8 +67,6 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "maven-publish")
     apply(plugin = "io.spring.dependency-management")
-
-    group = "at.rechnerherz"
 
     repositories {
         jcenter()
@@ -65,6 +80,8 @@ subprojects {
         }
     }
 
+    // Java source/target compatibility
+    // https://docs.gradle.org/current/userguide/java_plugin.html#other_convention_properties
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -80,23 +97,32 @@ subprojects {
     }
 
     tasks {
-        val sourcesJar by creating(Jar::class) {
+        val sourcesJar by registering(Jar::class) {
             dependsOn(JavaPlugin.CLASSES_TASK_NAME)
             archiveClassifier.set("sources")
             from(sourceSets["main"].allSource)
         }
 
+        // TODO: generate Javadoc with Dokka
+//        val javadocJar by registering(Jar::class) {
+//            dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
+//            archiveClassifier.set("javadoc")
+//            from(javadoc)
+//        }
+
         artifacts {
             archives(sourcesJar)
+//            archives(javadocJar)
             archives(jar)
         }
     }
 
     publishing {
         publications {
-            create<MavenPublication>("mavenJava") {
+            register<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifact(tasks["sourcesJar"])
+//                artifact(tasks["javadocJar"])
 
                 pom {
                     name.set("AOProfiling Spring Boot Starter")
@@ -125,12 +151,4 @@ subprojects {
             }
         }
     }
-}
-
-tasks.named("afterReleaseBuild") {
-    dependsOn(listOf(
-        ":aoprofiling-autoconfigure:publish",
-        ":aoprofiling-spring-boot-starter:publish",
-        ":aoprofiling:publish"
-    ))
 }
