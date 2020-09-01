@@ -32,6 +32,10 @@ plugins {
     // Maven Publish plugin
     // https://docs.gradle.org/current/userguide/publishing_maven.html
     `maven-publish`
+
+    // Bintray plugin
+    // https://github.com/bintray/gradle-bintray-plugin
+    id("com.jfrog.bintray") version "1.8.5"
 }
 
 // Always download Gradle sources and documentation (distribution type all)
@@ -62,8 +66,34 @@ tasks.named("afterReleaseBuild") {
     dependsOn(subprojects.map { it.tasks.findByName("publish") })
 }
 
+val groupName = "at.rechnerherz"
+
+val projectName = "aoprofiling-spring-boot-starter"
+val projectDescription = "Aspect-oriented profiling Spring Boot starter."
+val projectURL = "https://github.com/rechnerherz/aoprofiling-spring-boot-starter"
+
+val licenseName = "The Apache License, Version 2.0"
+val licenseShortName = "Apache-2.0"
+val licenseURL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+
+val developerID = "darioseidl"
+val developerName = "Dario Seidl"
+
+val organizationName = "Rechnerherz"
+val organizationURL = "https.//www.rechnerherz.at"
+
+val repoName = "rechnerherz/$projectName"
+val repoURL = "https://github.com/$repoName.git"
+val repoDevURL = "git@github.com:$repoName.git"
+
+val issueURL = "$projectURL/issues"
+
+val publicationName = "mavenJava"
+val bintrayRepo = "maven"
+val bintrayOrganization = "rechnerherz"
+
 allprojects {
-    group = "at.rechnerherz"
+    group = groupName
 }
 
 subprojects {
@@ -74,6 +104,7 @@ subprojects {
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "maven-publish")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "com.jfrog.bintray")
 
     repositories {
         jcenter()
@@ -125,35 +156,57 @@ subprojects {
 
     publishing {
         publications {
-            register<MavenPublication>("mavenJava") {
+            register<MavenPublication>(publicationName) {
                 from(components["java"])
                 artifact(tasks["sourcesJar"])
                 artifact(tasks["javadocJar"])
 
                 pom {
-                    name.set("AOProfiling Spring Boot Starter")
-                    description.set("Aspect-oriented profiling Spring Boot starter.")
-                    url.set("https://github.com/rechnerherz/aoprofiling-spring-boot-starter")
+                    name.set(projectName)
+                    description.set(projectDescription)
+                    url.set(projectURL)
 
                     licenses {
                         license {
-                            name.set("The Apache License, Version 2.0")
-                            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                            name.set(licenseName)
+                            url.set(licenseURL)
                         }
                     }
                     developers {
                         developer {
-                            id.set("darioseidl")
-                            name.set("Dario Seidl")
-                            email.set("darioseidl@fastmail.fm")
+                            id.set(developerID)
+                            name.set(developerName)
+                            organization.set(organizationName)
+                            organizationUrl.set(organizationURL)
                         }
                     }
                     scm {
-                        connection.set("https://github.com/rechnerherz/aoprofiling-spring-boot-starter.git")
-                        developerConnection.set("git@github.com:rechnerherz/aoprofiling-spring-boot-starter.git")
-                        url.set("https://github.com/rechnerherz/aoprofiling-spring-boot-starter")
+                        connection.set(repoURL)
+                        developerConnection.set(repoDevURL)
+                        url.set(projectURL)
                     }
                 }
+            }
+        }
+    }
+
+    bintray {
+        user = System.getenv("BINTRAY_USER")
+        key = System.getenv("BINTRAY_API_KEY")
+        setPublications(publicationName)
+        pkg.apply {
+            repo = bintrayRepo
+            name = projectName
+            desc = projectDescription
+            userOrg = bintrayOrganization
+            setLicenses(licenseShortName)
+            vcsUrl = projectURL
+            websiteUrl = projectURL
+            issueTrackerUrl = issueURL
+            githubRepo = repoName
+            githubReleaseNotesFile = "README.md"
+            version.apply {
+                name = project.version.toString()
             }
         }
     }
