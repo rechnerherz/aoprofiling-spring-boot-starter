@@ -133,7 +133,7 @@ subprojects {
                 pom {
                     name.set("AOProfiling Spring Boot Starter")
                     description.set("Aspect-oriented profiling Spring Boot starter.")
-                    url.set("https://github.com/rechnerherz/aoprofiling")
+                    url.set("https://github.com/rechnerherz/aoprofiling-spring-boot-starter")
 
                     licenses {
                         license {
@@ -149,9 +149,9 @@ subprojects {
                         }
                     }
                     scm {
-                        connection.set("https://github.com/rechnerherz/aoprofiling.git")
-                        developerConnection.set("git@github.com:rechnerherz/aoprofiling.git")
-                        url.set("https://github.com/rechnerherz/aoprofiling")
+                        connection.set("https://github.com/rechnerherz/aoprofiling-spring-boot-starter.git")
+                        developerConnection.set("git@github.com:rechnerherz/aoprofiling-spring-boot-starter.git")
+                        url.set("https://github.com/rechnerherz/aoprofiling-spring-boot-starter")
                     }
                 }
             }
