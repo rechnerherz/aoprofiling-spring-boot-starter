@@ -34,6 +34,12 @@ plugins {
     `maven-publish`
 }
 
+// Always download Gradle sources and documentation (distribution type all)
+// https://docs.gradle.org/current/userguide/gradle_wrapper.html#customizing_wrapper
+tasks.named<Wrapper>("wrapper") {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 repositories {
     // Gradle plugin portal needed for dokka 1.4.0-rc
     // https://github.com/Kotlin/dokka
