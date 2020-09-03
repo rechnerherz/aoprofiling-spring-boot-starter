@@ -4,13 +4,13 @@ plugins {
     // https://docs.gradle.org/current/userguide/java_library_plugin.html
     `java-library`
 
-    // Kotlin JVM plugin (only used to configure subprojects here)
+    // Kotlin JVM plugin
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    kotlin("jvm") version "1.4.0" apply false
+    kotlin("jvm") version "1.4.0"
 
-    // Kotlin Spring compiler plugin to make classes open by default (only used to configure subprojects here)
+    // Kotlin Spring compiler plugin to make classes open by default
     // https://kotlinlang.org/docs/reference/compiler-plugins.html
-    kotlin("plugin.spring") version "1.4.0" apply false
+    kotlin("plugin.spring") version "1.4.0"
 
     // Spring Boot dependency management
     // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
@@ -137,6 +137,12 @@ subprojects {
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    // Enable explicit API mode
+    // https://kotlinlang.org/docs/reference/whatsnew14.html#explicit-api-mode-for-library-authors
+    kotlin {
+        explicitApi()
     }
 
     // Set options for all Kotlin compilation tasks

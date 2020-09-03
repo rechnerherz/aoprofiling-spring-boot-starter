@@ -10,4 +10,4 @@ package at.rechnerherz.aoprofiling
     AnnotationTarget.PROPERTY_GETTER,
     AnnotationTarget.PROPERTY_SETTER
 )
-annotation class NoProfiling
+public annotation class NoProfiling

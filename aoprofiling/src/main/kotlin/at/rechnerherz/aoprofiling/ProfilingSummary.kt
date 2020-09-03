@@ -7,7 +7,7 @@ package at.rechnerherz.aoprofiling
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
-annotation class ProfilingSummary(
+public annotation class ProfilingSummary(
 
     /**
      * When [clearBefore] is true, the statistics will be cleared before the method is profiled,

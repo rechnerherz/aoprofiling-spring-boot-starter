@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-fun JoinPoint.targetAndMethodName(): String =
+internal fun JoinPoint.targetAndMethodName(): String =
     getTargetName() + "." + signature.name
 
-fun JoinPoint.getTargetName(): String {
+private fun JoinPoint.getTargetName(): String {
     val target: Any = target ?: return "[no target]"
 
     if (target is Advised && target.javaClass.canonicalName.contains("\$Proxy")) {
@@ -28,7 +28,7 @@ fun JoinPoint.getTargetName(): String {
     return target.javaClass.simpleName
 }
 
-fun JoinPoint.signature(
+internal fun JoinPoint.signature(
     prettyPrint: Boolean = false,
     truncate: Int? = null
 ): String {
@@ -53,7 +53,7 @@ fun JoinPoint.signature(
     return msg.toString()
 }
 
-fun JoinPoint.returnValueToString(
+internal fun JoinPoint.returnValueToString(
     returnValue: Any?,
     prettyPrint: Boolean,
     truncate: Int?
@@ -67,10 +67,10 @@ fun JoinPoint.returnValueToString(
             "[" + e.message + "]"
         }
 
-fun JoinPoint.hasVoidReturnType(): Boolean =
+private fun JoinPoint.hasVoidReturnType(): Boolean =
     signature is MethodSignature && (signature as MethodSignature).returnType == Void.TYPE
 
-fun cleanToString(
+private fun cleanToString(
     any: Any?,
     prettyPrint: Boolean = false,
     truncate: Int? = null

@@ -38,7 +38,7 @@ import java.util.*
  * [Advising transactional operations](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-declarative-applying-more-than-just-tx-advice)
  */
 @Aspect
-class ProfilingAspect(
+public class ProfilingAspect(
     private val properties: ProfilingProperties
 ) : Ordered {
 
@@ -64,90 +64,90 @@ class ProfilingAspect(
     \*------------------------------------*/
 
     @Pointcut("execution(public * *(..))")
-    fun publicMethod() {}
+    public fun publicMethod() {}
 
     @Pointcut("within(@org.springframework.stereotype.Service *)")
-    fun withinService() {}
+    public fun withinService() {}
 
     @Pointcut("within(@org.springframework.stereotype.Controller *)")
-    fun withinController() {}
+    public fun withinController() {}
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
-    fun withinRestController() {}
+    public fun withinRestController() {}
 
     @Pointcut(
         "within(@org.springframework.data.rest.webmvc.BasePathAwareController *)" +
                 " && !within(org.springframework.data.rest.webmvc.*)"
     )
-    fun withinBasePathAwareController() {}
+    public fun withinBasePathAwareController() {}
 
     @Pointcut(
         "within(@org.springframework.data.rest.webmvc.RepositoryRestController *)" +
                 " && !within(org.springframework.data.rest.webmvc.*)"
     )
-    fun withinRepositoryRestController() {}
+    public fun withinRepositoryRestController() {}
 
     @Pointcut("within(org.springframework.data.repository.Repository+)")
-    fun withinRepository() {}
+    public fun withinRepository() {}
 
     @Pointcut("within(@org.springframework.data.rest.core.annotation.RepositoryEventHandler *)")
-    fun withinRepositoryEventHandler() {}
+    public fun withinRepositoryEventHandler() {}
 
     @Pointcut(
         "within(@at.rechnerherz.aoprofiling.NoProfiling *)" +
                 " || @annotation(at.rechnerherz.aoprofiling.NoProfiling)"
     )
-    fun noProfiling() {}
+    public fun noProfiling() {}
 
     @Pointcut(
         "execution(public String toString())" +
                 " || execution(public int hashCode())" +
                 " || execution(public boolean equals(Object))"
     )
-    fun boilerplate() {}
+    public fun boilerplate() {}
 
     /*------------------------------------*\
      * Advices
     \*------------------------------------*/
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinService()")
-    fun profileServiceMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileServiceMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinController()")
-    fun profileControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRestController()")
-    fun profileRestControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileRestControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinBasePathAwareController()")
-    fun profileBasePathAwareControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileBasePathAwareControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRepositoryRestController()")
-    fun profileRepositoryRestControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileRepositoryRestControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRepository()")
-    fun profileRepositoryMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileRepositoryMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRepositoryEventHandler()")
-    fun profileRepositoryEventHandlerMethods(joinPoint: ProceedingJoinPoint): Any? =
+    public fun profileRepositoryEventHandlerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     /*------------------------------------*\
      * Summary Methods
     \*------------------------------------*/
 
-    fun clear() {
+    internal fun clear() {
         threadLocalInfos.get().clear()
         threadLocalStack.get().clear()
     }
 
-    fun summary(): String {
+    internal fun summary(): String {
         val infoMap: LinkedMultiValueMap<String, ProfilingInfo> = threadLocalInfos.get()
         val totalMillis: Long = infoMap.values.sumOf { infos -> infos.sumOf { it.millis } }
         val sb = StringBuilder()
@@ -240,7 +240,7 @@ class ProfilingAspect(
     private fun summaryTreeDrawing(size: Int): String =
         if (tree) ((if (size > 0) "├" + "─".repeat(size) else "└") + " ") else ""
 
-    companion object {
+    private companion object {
         const val HR = "────────────────────────────────────────────────────────────────────────────────\n"
     }
 

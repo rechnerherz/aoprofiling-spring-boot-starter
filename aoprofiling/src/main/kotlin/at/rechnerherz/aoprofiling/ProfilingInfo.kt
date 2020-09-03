@@ -1,6 +1,6 @@
 package at.rechnerherz.aoprofiling
 
-data class ProfilingInfo(
+internal data class ProfilingInfo(
     val callStack: List<String>,
     val signature: String,
     val millis: Long

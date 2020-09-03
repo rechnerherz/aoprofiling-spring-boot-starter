@@ -13,7 +13,7 @@ import org.springframework.core.Ordered
  * to make sure that the summary is printed after profiling the advised method.
  */
 @Aspect
-class ProfilingSummaryAspect(
+public class ProfilingSummaryAspect(
     private val properties: ProfilingProperties,
     private val profilingAspect: ProfilingAspect
 ): Ordered {
@@ -24,7 +24,7 @@ class ProfilingSummaryAspect(
         properties.profilingSummaryAspectOrder
 
     @Around("@annotation(at.rechnerherz.aoprofiling.ProfilingSummary) && @annotation(profilingSummary), argNames = profilingSummary")
-    fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {
+    public fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {
         if (profilingSummary.clearBefore)
             profilingAspect.clear()
 
