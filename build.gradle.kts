@@ -23,7 +23,7 @@ plugins {
     // Dokka: Kotlin documentation engine
     // https://github.com/Kotlin/dokka
     // https://kotlinlang.org/docs/reference/kotlin-doc.html
-    id("org.jetbrains.dokka") version "1.4.0-rc"
+    id("org.jetbrains.dokka") version "1.4.0"
 
     // Gradle Release plugin
     // https://github.com/researchgate/gradle-release
@@ -45,10 +45,6 @@ tasks.named<Wrapper>("wrapper") {
 }
 
 repositories {
-    // Gradle plugin portal needed for dokka 1.4.0-rc
-    // https://github.com/Kotlin/dokka
-    gradlePluginPortal()
-
     // jcenter repository
     // https://bintray.com/bintray/jcenter
     jcenter()
