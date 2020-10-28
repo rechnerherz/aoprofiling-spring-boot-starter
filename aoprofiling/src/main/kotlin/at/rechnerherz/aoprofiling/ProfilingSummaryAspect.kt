@@ -24,6 +24,7 @@ public class ProfilingSummaryAspect(
         properties.profilingSummaryAspectOrder
 
     @Around("@annotation(at.rechnerherz.aoprofiling.ProfilingSummary) && @annotation(profilingSummary), argNames = profilingSummary")
+    @Throws(Throwable::class)
     public fun printProfileSummary(joinPoint: ProceedingJoinPoint, profilingSummary: ProfilingSummary): Any? {
         if (profilingSummary.clearBefore)
             profilingAspect.clear()

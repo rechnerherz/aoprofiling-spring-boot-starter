@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.core.Ordered
 import org.springframework.util.LinkedMultiValueMap
 import java.util.*
+import kotlin.jvm.Throws
 
 /**
  * The [ProfilingAspect] traces the execution of public methods
@@ -111,30 +112,37 @@ public class ProfilingAspect(
     \*------------------------------------*/
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinService()")
+    @Throws(Throwable::class)
     public fun profileServiceMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinController()")
+    @Throws(Throwable::class)
     public fun profileControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRestController()")
+    @Throws(Throwable::class)
     public fun profileRestControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinBasePathAwareController()")
+    @Throws(Throwable::class)
     public fun profileBasePathAwareControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRepositoryRestController()")
+    @Throws(Throwable::class)
     public fun profileRepositoryRestControllerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRepository()")
+    @Throws(Throwable::class)
     public fun profileRepositoryMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
     @Around("publicMethod() && !noProfiling() && !boilerplate() && withinRepositoryEventHandler()")
+    @Throws(Throwable::class)
     public fun profileRepositoryEventHandlerMethods(joinPoint: ProceedingJoinPoint): Any? =
         profileMethod(joinPoint)
 
@@ -182,6 +190,7 @@ public class ProfilingAspect(
      * Helper Methods
     \*------------------------------------*/
 
+    @Throws(Throwable::class)
     private fun profileMethod(joinPoint: ProceedingJoinPoint): Any? {
         val targetAndMethodName = joinPoint.targetAndMethodName()
 
